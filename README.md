@@ -1,1 +1,16 @@
-# new-test-repo
+- run:
+    name: Plan a deploy
+    command: |
+      circleci run release plan \
+        --environment-name="workflows" \
+        --component-name="Deploy" \
+        --target-version="<some-version-name>"
+# Your job here doing the actual deployment
+- run:
+    name: Update a deploy to SUCCESS
+    command: circleci run release update --status=SUCCESS 
+    when: on_success 
+- run:
+    name: Update planned deploy to FAILED
+    command: circleci run release update --status=FAILED 
+    when: on_fail# new-test-repo
